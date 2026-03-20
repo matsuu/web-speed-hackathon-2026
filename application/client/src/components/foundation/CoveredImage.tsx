@@ -34,9 +34,7 @@ export const CoveredImage = ({ src }: Props) => {
     return raw != null ? new TextDecoder().decode(Buffer.from(raw, "binary")) : "";
   }, [data]);
 
-  const blobUrl = useMemo(() => {
-    return data != null ? URL.createObjectURL(new Blob([data])) : null;
-  }, [data]);
+
 
   const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
   const callbackRef = useCallback<RefCallback<HTMLDivElement>>((el) => {
@@ -46,7 +44,7 @@ export const CoveredImage = ({ src }: Props) => {
     });
   }, []);
 
-  if (isLoading || data === null || blobUrl === null) {
+  if (isLoading || data === null) {
     return null;
   }
 
@@ -64,7 +62,7 @@ export const CoveredImage = ({ src }: Props) => {
             "w-full h-auto": containerRatio <= imageRatio,
           },
         )}
-        src={blobUrl}
+        src={src}
       />
 
       <button
