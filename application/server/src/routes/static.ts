@@ -24,6 +24,9 @@ staticRouter.use(
   serveStatic(PUBLIC_PATH, {
     etag: false,
     lastModified: false,
+    setHeaders: (res) => {
+      res.set("Cache-Control", "public, max-age=31536000");
+    },
   }),
 );
 
