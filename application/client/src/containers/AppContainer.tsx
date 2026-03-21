@@ -56,7 +56,6 @@ export const AppContainer = () => {
   }, [pathname]);
 
   const [activeUser, setActiveUser] = useState<Models.User | null>(null);
-  const [isLoadingActiveUser, setIsLoadingActiveUser] = useState(true);
   useEffect(() => {
     void fetchJSON<Models.User>("/api/v1/me")
       .then((user) => {
@@ -64,15 +63,11 @@ export const AppContainer = () => {
       })
       .catch((error: unknown) => {
         if (error instanceof HttpError && error.status === 401) {
-          setActiveUser(null);
           return;
         }
         throw error;
-      })
-      .finally(() => {
-        setIsLoadingActiveUser(false);
       });
-  }, [setActiveUser, setIsLoadingActiveUser]);
+  }, []);
   const handleLogout = useCallback(async () => {
     await sendJSON("/api/v1/signout", {});
     setActiveUser(null);
@@ -81,16 +76,6 @@ export const AppContainer = () => {
 
   const authModalId = useId();
   const newPostModalId = useId();
-
-  if (isLoadingActiveUser) {
-    return (
-      <HelmetProvider>
-        <Helmet>
-          <title>読込中 - CaX</title>
-        </Helmet>
-      </HelmetProvider>
-    );
-  }
 
   return (
     <HelmetProvider>
