@@ -9,9 +9,18 @@ interface Props {
   authModalId: string;
   newPostModalId: string;
   onLogout: () => void;
+  onNeedAuthModal: () => void;
+  onNeedNewPostModal: () => void;
 }
 
-export const Navigation = ({ activeUser, authModalId, newPostModalId, onLogout }: Props) => {
+export const Navigation = ({
+  activeUser,
+  authModalId,
+  newPostModalId,
+  onLogout,
+  onNeedAuthModal,
+  onNeedNewPostModal,
+}: Props) => {
   return (
     <nav className="border-cax-border bg-cax-surface fixed right-0 bottom-0 left-0 z-10 h-12 border-t lg:relative lg:h-full lg:w-48 lg:border-t-0 lg:border-r">
       <div className="relative grid grid-flow-col items-center justify-evenly lg:fixed lg:flex lg:h-full lg:w-48 lg:flex-col lg:justify-between lg:p-2">
@@ -40,6 +49,9 @@ export const Navigation = ({ activeUser, authModalId, newPostModalId, onLogout }
               command="show-modal"
               commandfor={newPostModalId}
               text="投稿する"
+              onButtonPointerDown={onNeedNewPostModal}
+              onButtonMouseEnter={onNeedNewPostModal}
+              onButtonFocus={onNeedNewPostModal}
             />
           ) : null}
           {activeUser !== null ? (
@@ -55,6 +67,9 @@ export const Navigation = ({ activeUser, authModalId, newPostModalId, onLogout }
               text="サインイン"
               command="show-modal"
               commandfor={authModalId}
+              onButtonPointerDown={onNeedAuthModal}
+              onButtonMouseEnter={onNeedAuthModal}
+              onButtonFocus={onNeedAuthModal}
             />
           ) : null}
           {activeUser !== null ? (
